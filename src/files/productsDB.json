@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Reloj de pulsera de acero inoxidable",
+    "price": 3499.99,
+    "description": "Reloj de pulsera de acero inoxidable con esfera negra y manecillas luminosas. Resistente al agua hasta 50 metros.",
+    "thumbnail": "https://example.com/reloj.jpg",
+    "code": "R001",
+    "stock": 10,
+    "status": true,
+    "category": "accesorios"
+  },
+  {
+    "title": "Silla ergonómica de oficina",
+    "price": 8999.99,
+    "description": "Silla ergonómica de oficina con soporte lumbar ajustable y reposabrazos acolchados. Ideal para largas horas de trabajo.",
+    "thumbnail": "https://example.com/silla.jpg",
+    "code": "S001",
+    "stock": 5,
+    "status": true,
+    "category": "muebles"
+  },
+  {
+    "title": "Smartphone Android de alta gama",
+    "price": 18999.99,
+    "description": "Smartphone Android de alta gama con pantalla OLED de 6,5 pulgadas, cámara trasera de 64 MP y batería de larga duración.",
+    "thumbnail": "https://example.com/smartphone.jpg",
+    "code": "M001",
+    "stock": 8,
+    "status": true,
+    "category": "electrónica"
+  },
+  {
+    "title": "Teclado mecánico para gamers",
+    "price": 4999.99,
+    "description": "Teclado mecánico para gamers con retroiluminación LED y switches Cherry MX Brown. Incluye teclas adicionales para juegos.",
+    "thumbnail": "https://example.com/teclado.jpg",
+    "code": "T001",
+    "stock": 12,
+    "status": true,
+    "category": "accesorios"
+  },
+  {
+    "title": "Auriculares inalámbricos con cancelación de ruido",
+    "price": 7999.99,
+    "description": "Auriculares inalámbricos con cancelación de ruido activa y micrófono integrado. Conexión Bluetooth 5.0 y batería de larga duración.",
+    "thumbnail": "https://example.com/auriculares.jpg",
+    "code": "A001",
+    "stock": 15,
+    "status": true,
+    "category": "accesorios"
+  },
+  {
+    "title": "Laptop de última generación",
+    "price": 32999.99,
+    "description": "Laptop de última generación con pantalla táctil de 14 pulgadas, procesador Intel Core i9 y tarjeta gráfica NVIDIA RTX. Incluye Windows 10 Pro.",
+    "thumbnail": "https://example.com/laptop.jpg",
+    "code": "L001",
+    "stock": 3,
+    "status": true,
+    "category": "computadoras"
+  }
+]

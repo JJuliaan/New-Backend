@@ -1,0 +1,24 @@
+[
+	{
+		"id": 1,
+		"title": "Grapefruit - Pink",
+		"price": 22,
+		"description": "hola sy nuevo",
+		"thumbnail": "https://th.bing.com/th/id/OIP.vFFlQJpe2PvtmDAaaep2KwHaHa?pid=ImgDet&w=602&h=602&rs=1", 
+		"code": 2020,
+		"stock": 20,
+		"status": true,
+		"category": "lala"
+	},
+	{
+		"id": 2,
+		"title": "Grapefruit - Pink",
+		"price": 22,
+		"description": "hola sy nuevo",
+		"thumbnail": "https://th.bing.com/th/id/OIP.vFFlQJpe2PvtmDAaaep2KwHaHa?pid=ImgDet&w=602&h=602&rs=1", 
+		"code": 2020,
+		"stock": 20,
+		"status": true,
+		"category": "lala"
+	}
+]
