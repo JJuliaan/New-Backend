@@ -1,10 +1,10 @@
 const { Router } = require('express')
-const UsuariosDB = require('../usersDB.dao')
+const UsuariosDB = require('../service/users.service')
 const passport = require('passport')
 const Users = new UsuariosDB()
 const router = Router()
-const privateAccess = require('../../middlewares/privateAccess.middlewares')
-const publicAccess = require('../../middlewares/publicAccess.middlewars')
+const privateAccess = require('../middlewares/privateAccess.middlewares')
+const publicAccess = require('../middlewares/publicAccess.middlewars')
 
 router.get('/', publicAccess, async (req, res) => {
     res.render('signup.handlebars')

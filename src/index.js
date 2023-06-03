@@ -2,7 +2,7 @@ const app = require('./app')
 const ProductManager = require("./fsMnager/fileManager/productManager");
 const path = require("path")
 const producto = new ProductManager(path.join(__dirname, "./files/products.json"))
-const MessageDao = require('./dao/message.dao')
+const MessageDao = require('./service/message.service')
 const Messages = new MessageDao()
 
 const messages = []

@@ -1,4 +1,4 @@
-const Products = require("./models/products.model")
+const Products = require("../models/products.model")
 const paginate = require('mongoose-paginate-v2')
 const { port } = require('../config/app.config')
 

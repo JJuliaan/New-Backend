@@ -1,17 +1,17 @@
-const { default: mongoose } = require('mongoose')
-const Carts = require('./models/carts.model')
-const Products = require('./models/products.model')
+const mongoose = require('mongoose')
+const cartStorage = require('../stores/cart.store')
+const Products = require('../models/products.model')
 
 class CartsDao {
     constructor() { }
 
     async findAll() {
-        return await Carts.find().populate('cart.products')
+        return await cartStorage.find()
     }
 
     async agregateProduct(cid, pid) {
         try {
-            const buscadorCart = await Carts.findOne({ _id: cid })
+            const buscadorCart = await cartStorage.findOne(cid)
             const buscadorProduct = await Products.findOne({ _id: pid })
             if (!buscadorProduct) return 'Producto no encontado'
 
@@ -37,7 +37,7 @@ class CartsDao {
     async actualizarCantidad(cid, pid, cantidad) {
         try {
             // console.log('entro');
-            const buscadorCart = await Carts.findById({ _id: cid })
+            const buscadorCart = await cartStorage.findById(cid)
             const buscadorProduct = buscadorCart.cart.find(p => p.products == pid)
 
             // console.log(buscadorProduct)
@@ -56,7 +56,7 @@ class CartsDao {
 
     async borrarProduct(cid) {
         try {
-            const buscadorCart = await Carts.findOne({ _id: cid })
+            const buscadorCart = await cartStorage.findOne(cid)
             buscadorCart.cart = []
 
             await buscadorCart.save()
@@ -71,7 +71,7 @@ class CartsDao {
     async borrarOne(cid, pid) {
         try {
             console.log('entro');
-            const buscadorCart = await Carts.findOne({ _id: cid })
+            const buscadorCart = await cartStorage.findOne(cid)
             const buscadorProduct = buscadorCart.cart.findIndex(p => p.products.equals(new mongoose.Types.ObjectId(pid)))
 
             if (buscadorProduct === -1) return 'Producto no encontrado'
@@ -87,19 +87,19 @@ class CartsDao {
     }
 
     async findById(id) {
-        return await Carts.findById(id).populate('cart.products')
+        return await cartStorage.findPopulateId(id)
     }
 
     async create() {
-        return await Carts.create({})
+        return await cartStorage.create()
     }
 
     async updateOne(id, update) {
-        return await Carts.updateOne({ _id: id }, update)
+        return await cartStorage.update(id, update)
     }
 
     async delete() {
-        return await Carts.deleteMany()
+        return await cartStorage.borrar()
     }
 }
 

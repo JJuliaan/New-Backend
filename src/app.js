@@ -7,7 +7,7 @@ const hbs = handlebars.create({
     defaultLayout: 'main'
 });
 const cookieParser = require('cookie-parser')
-const router = require('./routerApp')
+const router = require('./router')
 const dbConnect = require('../db')
 const passport = require('passport');
 const { dbAdmin, dbPassword, dbHost, dbName } = require('./config/db.config')

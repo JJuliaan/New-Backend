@@ -1,5 +1,5 @@
-const userDao = require('./models/usersDB.model')
-const Cart = require('./models/carts.model')
+const userStorage = require('../stores/users.store')
+const Cart = require('../stores/cart.store')
 const { createHash } = require('../ultis/cryptPassword')
 
 class UsuariosDB {
@@ -22,7 +22,7 @@ class UsuariosDB {
                 role
             }
 
-            const user = await userDao.create(newUsuarioInfo)
+            const user = await userStorage.create(newUsuarioInfo)
             // console.log(newUsuarioInfo)
             // console.log('entro')
 

@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const Users = require('../models/usersDB.model')
-const publicAccess = require('../../middlewares/publicAccess.middlewars')
-const { isValidPassword } = require('../../ultis/cryptPassword')
+const publicAccess = require('../middlewares/publicAccess.middlewars')
+const { isValidPassword } = require('../ultis/cryptPassword')
 const passport = require('passport')
 const router = Router()
 

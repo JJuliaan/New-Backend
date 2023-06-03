@@ -1,8 +1,8 @@
 const passport = require('passport')
 const local = require('passport-local')
 const GitHubStategy = require('passport-github2')
-const Users = require('../dao/models/usersDB.model')
-const UsuariosDB = require('../dao/usersDB.dao')
+const Users = require('../models/usersDB.model')
+const UsuariosDB = require('../service/users.service')
 const userDao = new UsuariosDB()
 const { createHash, isValidPassword } = require('../ultis/cryptPassword')
 
