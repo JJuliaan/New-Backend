@@ -8,7 +8,7 @@ const hbs = handlebars.create({
 });
 const cookieParser = require('cookie-parser')
 const router = require('./router')
-const dbConnect = require('../db')
+const MongoConnect = require('../db')
 const passport = require('passport');
 const { dbAdmin, dbPassword, dbHost, dbName } = require('./config/db.config')
 
@@ -46,7 +46,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 router(app)
-dbConnect()
+const connect = MongoConnect.getInstance()
 
 
 module.exports = app

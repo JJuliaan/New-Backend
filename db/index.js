@@ -1,14 +1,31 @@
 const mongoose = require('mongoose')
 const { dbAdmin, dbPassword, dbHost, dbName } = require('../src/config/db.config')
 
-const dbConnect = async () => {
-    try {
-        await mongoose.connect(`mongodb+srv://${dbAdmin}:${dbPassword}@${dbHost}/${dbName}?retryWrites=true&w=majority`)
-        console.log('db is connected')
+class MongoConnect  {
+    static #instance
 
-    } catch (error) {
-        console.log(error);
+    constructor () {
+        this.MongoConnect()
+    }
+
+    async MongoConnect() {
+        try {
+            await mongoose.connect(`mongodb+srv://${dbAdmin}:${dbPassword}@${dbHost}/${dbName}?retryWrites=true&w=majority`)
+            console.log('db is connect')
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    static getInstance() {
+        if(!this.#instance) {
+            this.#instance = new MongoConnect()
+            console.log('origin')
+            return this.#instance
+        }
+        console.log('copia')
+        return this.#instance
     }
 }
 
-module.exports = dbConnect
+module.exports = MongoConnect
