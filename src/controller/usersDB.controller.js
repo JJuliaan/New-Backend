@@ -16,7 +16,7 @@ router.post('/', passport.authenticate('register', {failureRedirect: '/users/fai
     try {
 
         res.status(201).json({Status: 'succes', message: 'usuario registrado'})
-
+        
     } catch (error) {
         console.log(error.message);
         res.status(500).json({Status: 'error', error: 'Internal server error'})

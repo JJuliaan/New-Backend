@@ -20,6 +20,9 @@ const collectionSchema = new mongoose.Schema({
         require: true,
         type: String
     },
+    phone: {
+        type: String
+    },
     role: {
         type: String,
         enum: ['administrador', 'usuario'],

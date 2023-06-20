@@ -3,6 +3,7 @@ const uploader = require('../ultis/multer.ultis')
 const FileManager = require('../service/FileManager.service')
 const ProductsDao = require('../service/products.service')
 const Cart = require('../models/carts.model')
+const privateAccess = require('../middlewares/privateAccess.middlewares')
 const router = Router()
 const fileManager = new FileManager()
 const Products = new ProductsDao()
@@ -29,7 +30,7 @@ router.get('/all', async (req, res) => {
     res.json({ poducts: await Products.findAll() })
 })
 
-router.get('/', async (req, res) => {
+router.get('/', privateAccess, async (req, res) => {
     try {
 
         let cartId = req.cookies.cartId;

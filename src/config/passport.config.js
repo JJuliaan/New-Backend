@@ -5,6 +5,7 @@ const Users = require('../models/usersDB.model')
 const UsuariosDB = require('../service/users.service')
 const userDao = new UsuariosDB()
 const { createHash, isValidPassword } = require('../ultis/cryptPassword')
+const UserDTO = require('../DTOs/users.dto')
 
 const LocalStrategy = local.Strategy
 
@@ -12,7 +13,8 @@ const initializePassport = () => {
 
     passport.use('register', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
-            const { first_name, email, password } = req.body
+
+            const newUserInfo = new UserDTO(req.body)
 
             const user = await Users.findOne({ email: username })
             if (user) {
@@ -20,14 +22,10 @@ const initializePassport = () => {
                 return done(null, false)
             }
 
-            const newUsuarioInfo = {
-                first_name,
-                email,
-                password: createHash(password),
-            }
-
-            const newUser = await userDao.crearUsuario(newUsuarioInfo)
-
+            
+            const newUser = await userDao.crearUsuario(newUserInfo)
+            console.log(newUser)
+            
             done(null, newUser)
         } catch (error) {
             done(error)
@@ -83,7 +81,8 @@ const initializePassport = () => {
     passport.serializeUser((newUser, done) => {
         try {
             const userId = newUser.id
-            done(null, userId )
+            done(null, userId)
+
             
         } catch (error) {
             console.log(error.message)

@@ -1,44 +1,38 @@
 const userStorage = require('../stores/users.store')
-const Cart = require('../stores/cart.store')
-const { createHash } = require('../ultis/cryptPassword')
+const Cart = require('../models/carts.model')
+const message = require('../repositories')
+
+
 
 class UsuariosDB {
-    constructor() { }
+  constructor() { }
 
-    async crearUsuario(usuario) {
-        try {
-            const { first_name, email, password } = usuario
+  async crearUsuario(usuario) {
+    try {
 
-            let role = 'usuario'
+      let role = 'usuario'
 
-            if (email === 'admin@gmail.com' && password === 'admin') {
-                role = 'administrador'
-            }
-            // console.log(usuario);
-            const newUsuarioInfo = {
-                first_name,
-                email,
-                password: createHash(password),
-                role
-            }
+      if (usuario.email === 'admin@gmail.com' && usuario.password === 'admin') {
+        role = 'administrador'
+      }
 
-            const user = await userStorage.create(newUsuarioInfo)
-            // console.log(newUsuarioInfo)
-            // console.log('entro')
+      const user = await userStorage.create(usuario)
+      
+      await message.send(usuario) 
 
-            const cart = new Cart({
-                userId: user._id
-            })
+      const cart = new Cart({
+        userId: user._id
+      })
 
-            await cart.save()
+      await cart.save()
 
-            return user
+      return user
 
-        } catch (error) {
-            return error
-        }
-
+    } catch (error) {
+      return error
     }
+
+  }
 }
 
 module.exports = UsuariosDB

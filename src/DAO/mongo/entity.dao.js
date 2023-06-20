@@ -1,0 +1,5 @@
+
+
+class EntityDAO {
+    constructor(entity)
+}
