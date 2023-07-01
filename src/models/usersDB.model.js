@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Cart = require('./carts.model')
 
 const collectionName = 'userDB'
 
@@ -27,6 +28,10 @@ const collectionSchema = new mongoose.Schema({
         type: String,
         enum: ['administrador', 'usuario'],
         default: 'usuario',
+    },
+    cartId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Cart'
     },
 })
 

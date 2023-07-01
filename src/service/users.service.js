@@ -17,14 +17,15 @@ class UsuariosDB {
       }
 
       const user = await userStorage.create(usuario)
-      
-      await message.send(usuario) 
 
-      const cart = new Cart({
+      await message.send(usuario)
+
+      const cart = Cart.create({
         userId: user._id
       })
 
-      await cart.save()
+      user.cartId = cart._id
+
 
       return user
 

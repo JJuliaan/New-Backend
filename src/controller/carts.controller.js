@@ -1,7 +1,26 @@
 const { Router } = require('express')
 const CartsDao = require('../service/cart.service')
+const ticketDao = require('../service/tickets.service')
+const Ticket = new ticketDao()
 const Carts = new CartsDao()
 const router = Router()
+
+
+router.post('/:cid/pucharse', async (req, res) => {
+    try {
+        const cartId = req.params.cid
+        
+        const newTicket = await Ticket.create(cartId)
+
+        res.json({ message: 'Compra finalizada exitosamente', Ticket: newTicket })
+        
+    } catch (error) {
+        console.error('Error al finalizar la compra:', error)
+        res.status(500).json({ error: 'Ha ocurrido un error al finalizar la compra' })
+    }
+
+})
+
 
 router.delete('/peligroDelete', async (req, res) => {
     await Carts.delete()
@@ -21,7 +40,7 @@ router.get('/:cid', async (req, res) => {
         const cid = req.params.cid
         const cart = await Carts.findById(cid)
 
-        res.render('cart.handlebars',{ cart })
+        res.render('cart.handlebars', { cart })
     } catch (error) {
         console.log(error)
     }

@@ -12,28 +12,7 @@ class ProductsDao {
     async findAll() {
         try {
             return await Products.find()
-            // const products = await Products.aggregate([
-            //     {
-            //         //es como un buscador
-            //         $match: { category: "accesorios" }
-            //     },
-            //     {
-            //         //los agrupa
-            //         $group: { _id: "$title", totalStock: { $sum: "$stock" } }
-            //     },
-            //     {
-            //         //a los agrupados los pone de mayor a menor
-            //         $sort: { totalStock: -1 }
-            //     },
-            //     {
-            //         $group: { _id: 1, orders: { $push: "$$ROOT" } }
-            //     },
-            //     {
-            //         $project: { "_id": 0, orders: "$orders" }
-            //     }
-            // ])
-            // console.log(products)
-            // return products
+
         } catch (error) {
             return error.message
         }

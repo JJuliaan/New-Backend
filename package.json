@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:beta": " NODE_ENV=beta nodemon src/index.js" ,
-    "start:prod": " NODE_ENV=production nodemon src/index.js"
+    "start:beta": "set NODE_ENV=beta& nodemon src/index.js" ,
+    "start:prod": "set NODE_ENV=production& nodemon src/index.js"
   },
   "repository": {
     "type": "git",
