@@ -3,6 +3,7 @@ const User = require('../models/usersDB.model')
 const generateUniqueCode = require('../ultis/generateUniqueCode.utils')
 const calculateTotalAmount = require('../ultis/calculateTotalAmount.utils')
 const CartsDao = require('./cart.service');
+const Products = require('../models/products.model');
 const Carts = new CartsDao()
 
 
@@ -44,7 +45,7 @@ class ticketDao {
             }
 
             for (const update of productsToUpdate) {
-                await Product.findByIdAndUpdate(update.products, { stock: update.stock })
+                await Products.findByIdAndUpdate(update.products, { stock: update.stock })
             }
 
             const newTicketInfo = {
@@ -57,6 +58,8 @@ class ticketDao {
             const ticket = await Ticket.create(newTicketInfo)
 
             cart.cart = cart.cart.filter(item => !productsNotPurchased.includes(item.products))
+
+            console.log(cart.cart)
 
             await cart.save()
 
