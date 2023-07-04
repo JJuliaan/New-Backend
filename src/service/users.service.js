@@ -1,6 +1,9 @@
 const userStorage = require('../stores/users.store')
 const Cart = require('../models/carts.model')
 const message = require('../repositories')
+const CustomError = require('../handlers/errors/customError')
+const generateUsersErrorInfo = require('../handlers/errors/info')
+const EnumErrors = require('../handlers/errors/enumError')
 
 
 
@@ -30,7 +33,7 @@ class UsuariosDB {
       return user
 
     } catch (error) {
-      return error
+      throw error
     }
 
   }

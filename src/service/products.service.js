@@ -1,12 +1,41 @@
 const Products = require("../models/products.model")
 const paginate = require('mongoose-paginate-v2')
 const { port } = require('../config/app.config')
+const faker = require("faker")
+const generateUniqueCode = require("../ultis/generateUniqueCode.utils")
 
 class ProductsDao {
     constructor() { }
 
     async insertMany(products) {
         return await Products.insertMany(products)
+    }
+
+    async mocking() {
+
+        try {
+            const products = []
+
+            for (let i = 0; i < 100; i++) {
+                const product = await Products.create({
+                    title: faker.commerce.productAdjective(),
+                    price: parseFloat(faker.commerce.price()),
+                    description: faker.commerce.productDescription(),
+                    code: generateUniqueCode(),
+                    stock: 15,
+                    category: faker.commerce.product(),
+                    thumbnail: faker.image.imageUrl()
+                })
+
+                products.push(product)
+            }
+
+            return await this.insertMany(products)
+
+        } catch (error) {
+            console.log(error)
+            throw new Error (error)
+        }
     }
 
     async findAll() {

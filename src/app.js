@@ -1,6 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars')
 const MongoStore = require('connect-mongo')
+const compression = require('express-compression')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const hbs = handlebars.create({
     handlebars: allowInsecurePrototypeAccess(require('handlebars')),
@@ -15,9 +16,11 @@ const { dbAdmin, dbPassword, dbHost, dbName } = require('./config/db.config')
 const app = express()
 
 
+
 const morgan = require('morgan');
 const session = require('express-session');
 const initializePassport = require('./config/passport.config');
+const errorHandler = require('./middlewares/errors');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -44,6 +47,13 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(errorHandler)
+
+app.use(compression({
+    brotli: { enabled: true, zlib: {} }
+})
+)
 
 router(app)
 const connect = MongoConnect.getInstance()

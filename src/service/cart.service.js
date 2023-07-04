@@ -30,7 +30,7 @@ class CartsDao {
 
             return buscadorCart
         } catch (error) {
-            return error.message
+            throw error
         }
     }
 
@@ -50,7 +50,7 @@ class CartsDao {
             return buscadorCart
 
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -64,7 +64,7 @@ class CartsDao {
             return buscadorCart
 
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -82,7 +82,7 @@ class CartsDao {
             return buscadorCart
 
         } catch (error) {
-
+            throw error
         }
     }
 

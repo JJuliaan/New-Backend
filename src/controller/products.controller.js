@@ -13,6 +13,18 @@ router.delete('/deleteAll', async (req, res) => {
     res.json({ message: 'TODO ELIMINADO' })
 })
 
+router.get('/mockingproducts', async (req, res) => {
+    try {
+        const newProducts = await Products.mocking()
+
+        res.json({ products: newProducts})
+
+    } catch (error) {
+        console.log(error.message)
+        res.json({error})
+    }
+})
+
 router.get('/loadItems', async (req, res) => {
     try {
         const products = await fileManager.loadItems()

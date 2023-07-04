@@ -11,7 +11,7 @@ class MessageDao {
             console.log('Log en el dao: ' + chat); //Aca llega vacio
             return chat
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -19,7 +19,7 @@ class MessageDao {
         try {
             return await Messages.find().lean()
         } catch (error) {
-            return error
+            throw error
         }
     }
 }

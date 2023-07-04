@@ -3,7 +3,6 @@ const UsuariosDB = require('../service/users.service')
 const passport = require('passport')
 const Users = new UsuariosDB()
 const router = Router()
-const privateAccess = require('../middlewares/privateAccess.middlewares')
 const publicAccess = require('../middlewares/publicAccess.middlewars')
 
 router.get('/', publicAccess, async (req, res) => {
@@ -28,7 +27,7 @@ router.get('/failregister', (req, res) => {
     console.log('falló estrategia de registro!')
   
     res.json({ error: 'Failed register' })
-  })
+})
 
 
 
