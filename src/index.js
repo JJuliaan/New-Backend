@@ -9,10 +9,11 @@ const messages = []
 
 
 const { port } = require('./config/app.config')
-const { Server } = require('socket.io')
+const { Server } = require('socket.io');
+const logger = require('./logger/factory');
 
 const httpServer = app.listen(port, () => {
-    console.log(`Server running at ${port}`);
+    logger.info(`Server running at ${port}`);
 })
 
 const io = new Server(httpServer)

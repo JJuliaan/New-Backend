@@ -3,6 +3,7 @@ const Users = require('../models/usersDB.model')
 const publicAccess = require('../middlewares/publicAccess.middlewars')
 const { isValidPassword } = require('../ultis/cryptPassword')
 const passport = require('passport')
+const logger = require('../logger/factory')
 const router = Router()
 
 router.post('/', passport.authenticate('login', { failureRedirect: 'auth/faillogin' }), async (req, res) => {
@@ -46,11 +47,11 @@ router.get('/logout', (req, res) => {
 
 router.get('/faillogin', (req, res) => {
     try {
-        console.log('falló estrategia de autenticacion')
+        logger.warning('falló estrategia de autenticacion')
         res.json({ error: 'Failed login' })
 
     } catch (error) {
-        console.log(error.message);
+        logger.warning(error.message)
     }
 })
 

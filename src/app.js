@@ -21,6 +21,7 @@ const morgan = require('morgan');
 const session = require('express-session');
 const initializePassport = require('./config/passport.config');
 const errorHandler = require('./middlewares/errors');
+const addLogger = require('./middlewares/logger.midelwares');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -43,6 +44,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
+app.use(addLogger)
 
 initializePassport()
 app.use(passport.initialize())

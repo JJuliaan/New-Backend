@@ -9,6 +9,7 @@ const UserDTO = require('../DTOs/users.dto')
 const CustomError = require('../handlers/errors/customError')
 const generateUsersErrorInfo = require('../handlers/errors/info')
 const EnumErrors = require('../handlers/errors/enumError')
+const logger = require('../logger/factory')
 
 const LocalStrategy = local.Strategy
 
@@ -21,7 +22,7 @@ const initializePassport = () => {
 
             const user = await Users.findOne({ email: username })
             if (user) {
-                console.log('existe');
+                logger.warning('existe');
                 return done(null, false)
             }
 
@@ -35,7 +36,6 @@ const initializePassport = () => {
             }
 
             const newUser = await userDao.crearUsuario(newUserInfo)
-            // console.log(newUser)
 
             done(null, newUser)
         } catch (error) {
@@ -47,7 +47,7 @@ const initializePassport = () => {
         try {
             const user = await Users.findOne({ email: username })
             if (!user) {
-                console.log('el usuario no existe')
+                logger.warning('el usuario no existe')
                 return done(null, false)
             }
 
@@ -56,7 +56,7 @@ const initializePassport = () => {
             done(null, user)
 
         } catch (error) {
-            console.log(error)
+            logger.error(error)
         }
 
     }))
@@ -68,7 +68,6 @@ const initializePassport = () => {
     },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                console.log(profile)
 
                 const user = await Users.findOne({ email: profile._json.email })
 
@@ -96,7 +95,7 @@ const initializePassport = () => {
 
 
         } catch (error) {
-            console.log(error.message)
+            logger.error(error.message)
         }
     })
 

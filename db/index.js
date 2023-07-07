@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { dbAdmin, dbPassword, dbHost, dbName } = require('../src/config/db.config')
+const logger = require('../src/logger/factory');
 
 class MongoConnect  {
     static #instance
@@ -11,19 +12,19 @@ class MongoConnect  {
     async MongoConnect() {
         try {
             await mongoose.connect(`mongodb+srv://${dbAdmin}:${dbPassword}@${dbHost}/${dbName}?retryWrites=true&w=majority`)
-            console.log('db is connect')
+            logger.info('db is connect')
             
         } catch (error) {
-            console.log(error)
+            logger.error(error.message)
         }
     }
     static getInstance() {
         if(!this.#instance) {
             this.#instance = new MongoConnect()
-            console.log('origin')
+            logger.debug('origin')
             return this.#instance
         }
-        console.log('copia')
+        logger.debug('copia')
         return this.#instance
     }
 }

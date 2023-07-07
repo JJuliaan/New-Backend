@@ -6,7 +6,8 @@ const router = Router()
 const publicAccess = require('../middlewares/publicAccess.middlewars')
 
 router.get('/', publicAccess, async (req, res) => {
-    res.render('signup.handlebars')
+    res.json({ message: 'Hi server'})
+    // res.render('signup.handlebars')
 })
 
 

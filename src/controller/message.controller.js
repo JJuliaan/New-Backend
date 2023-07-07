@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const ChatsDao = require('../service/message.service')
+const ChatsDao = require('../service/message.service');
+const logger = require('../logger/factory');
 
 const router = Router();
 const Chats = new ChatsDao()
@@ -19,7 +20,7 @@ router.post('/', async (req, res) => {
         const msj = await Chats.create(user, message)
         res.json({ messages: msj })
     } catch (error) {
-        console.log(error);
+        logger.error(error.message);
         res.status(400).json({ error: error })
     }
 })

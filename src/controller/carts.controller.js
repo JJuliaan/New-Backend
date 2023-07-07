@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const CartsDao = require('../service/cart.service')
 const ticketDao = require('../service/tickets.service')
+const logger = require('../logger/factory')
 const Ticket = new ticketDao()
 const Carts = new CartsDao()
 const router = Router()
@@ -31,7 +32,7 @@ router.get('/all', async (req, res) => {
     try {
         res.json({ carts: await Carts.findAll() })
     } catch (error) {
-        console.log(error)
+        loggerr.error(error)
     }
 })
 
@@ -42,7 +43,7 @@ router.get('/:cid', async (req, res) => {
 
         res.render('cart.handlebars', { cart })
     } catch (error) {
-        console.log(error)
+        logger.error(error)
     }
 })
 
@@ -64,7 +65,7 @@ router.post('/:cid/:pid', async (req, res) => {
 
         res.json({ newProduct })
     } catch (error) {
-        console.log(error.message);
+        logger.error(error.message);
     }
 })
 
