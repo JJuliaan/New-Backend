@@ -1,3 +1,5 @@
+const { port } = require('./config/app.config')
+const { Server } = require('socket.io');
 const express = require('express');
 const handlebars = require('express-handlebars')
 const MongoStore = require('connect-mongo')
@@ -12,6 +14,7 @@ const router = require('./router')
 const MongoConnect = require('../db')
 const passport = require('passport');
 const { dbAdmin, dbPassword, dbHost, dbName } = require('./config/db.config')
+const logger = require('./logger/factory')
 
 const app = express()
 
@@ -61,5 +64,13 @@ app.use(compression({
 router(app)
 const connect = MongoConnect.getInstance()
 
+
+
+
+const httpServer = app.listen(port, () => {
+    logger.info(`Server running at ${port}`);
+})
+
+const io = new Server(httpServer)
 
 module.exports = app

@@ -1,22 +1,12 @@
-const app = require('./app')
 const ProductManager = require("./fsMnager/fileManager/productManager");
 const path = require("path")
 const producto = new ProductManager(path.join(__dirname, "./files/products.json"))
 const MessageDao = require('./service/message.service')
 const Messages = new MessageDao()
+const logger = require('./logger/factory');
 
 const messages = []
 
-
-const { port } = require('./config/app.config')
-const { Server } = require('socket.io');
-const logger = require('./logger/factory');
-
-const httpServer = app.listen(port, () => {
-    logger.info(`Server running at ${port}`);
-})
-
-const io = new Server(httpServer)
 
 io.on('connection', async socket => {
     console.log(socket.id);

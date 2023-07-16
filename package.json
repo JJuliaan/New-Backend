@@ -2,11 +2,12 @@
   "name": "miproyecto",
   "version": "0.1.0",
   "description": "Servidor web",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:beta": "set NODE_ENV=beta& nodemon src/index.js",
-    "start:prod": "set NODE_ENV=production& nodemon src/index.js"
+    "start:beta": "set NODE_ENV=beta& nodemon src/app.js",
+    "start:prod": "set NODE_ENV=production& nodemon src/app.js",
+    "start": "set NODE_ENV=production& node src/app.js"
   },
   "repository": {
     "type": "git",
