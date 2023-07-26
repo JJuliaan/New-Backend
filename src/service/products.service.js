@@ -34,7 +34,7 @@ class ProductsDao {
 
         } catch (error) {
             console.log(error)
-            throw new Error (error)
+            throw new Error(error)
         }
     }
 
@@ -106,7 +106,8 @@ class ProductsDao {
             stock,
             status,
             category,
-            thumbnail
+            thumbnail,
+            owner: ownerId
         }
 
         if (!title || !price || !description || !thumbnail || !code || !stock || !category) return 'Faltan datos'
@@ -124,13 +125,20 @@ class ProductsDao {
             code,
             stock,
             status,
-            category
+            category,
+            owner: ownerId
         }
 
         return await Products.updateOne({ _id: id }, updateProduct)
     }
 
     async delete(id) {
+        const product = await Products.findById(id)
+
+        if (!product) {
+            return res.status(404).json({ status: 'error', error: 'Producto no encontrado' });
+        }
+        
         return Products.updateOne({ _id: id }, { status: false })
     }
 

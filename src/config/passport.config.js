@@ -47,7 +47,7 @@ const initializePassport = () => {
         try {
             const user = await Users.findOne({ email: username })
             if (!user) {
-                logger.warning('el usuario no existe')
+                logger.error('el usuario no existe')
                 return done(null, false)
             }
 
@@ -57,6 +57,7 @@ const initializePassport = () => {
 
         } catch (error) {
             logger.error(error)
+            done(error)
         }
 
     }))

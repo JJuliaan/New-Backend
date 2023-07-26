@@ -4,6 +4,8 @@ const FileManager = require('../service/FileManager.service')
 const ProductsDao = require('../service/products.service')
 const Cart = require('../models/carts.model')
 const privateAccess = require('../middlewares/privateAccess.middlewares')
+const premiumAccess = require('../middlewares/premiumAccess.midelware')
+const adminAccess = require('../middlewares/adminAccess.midelware')
 const router = Router()
 const fileManager = new FileManager()
 const Products = new ProductsDao()
@@ -89,7 +91,7 @@ router.get('/:pid', async (req, res) => {
     }
 })
 
-router.post('/', uploader.single('file'), async (req, res) => {
+router.post('/', premiumAccess,adminAccess , uploader.single('file'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ status: "error" })
         const { title, price, description, code, stock, status, category } = req.body
@@ -101,7 +103,8 @@ router.post('/', uploader.single('file'), async (req, res) => {
             stock,
             status,
             category,
-            thumbnail: req.file.filename
+            thumbnail: req.file.filename,
+            owner: ownerId
         }
 
         const newsProducts = await Products.create(newProduct)
@@ -131,12 +134,33 @@ router.put('/:pid', async (req, res) => {
     }
 })
 
-router.delete('/:pid', async (req, res) => {
+router.delete('/:pid',premiumAccess ,async (req, res) => {
     try {
         const pid = req.params.pid
 
-        const deleteProduct = await Products.delete(pid)
-        res.json({ message: "Producto eliminado", products: deleteProduct })
+        if (req.user.role === 'admin' || (req.user.role === 'premium' && req.user._id.toString() === product.owner.toString())) {
+            const deleteProduct = await Products.delete(pid)
+            res.json({ message: "Producto eliminado", products: deleteProduct })
+        }
+
+        res.status(403).json({ status: 'error', error: 'Acceso no autorizado' })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
+router.delete('/:pid',adminAccess ,async (req, res) => {
+    try {
+        const pid = req.params.pid
+
+        if (req.user.role === 'admin' || (req.user.role === 'premium' && req.user._id.toString() === product.owner.toString())) {
+            const deleteProduct = await Products.delete(pid)
+            res.json({ message: "Producto eliminado", products: deleteProduct })
+        }
+        
+        res.status(403).json({ status: 'error', error: 'Acceso no autorizado' })
+
     } catch (error) {
         console.log(error.message);
     }

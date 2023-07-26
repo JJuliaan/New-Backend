@@ -34,6 +34,10 @@ const productsSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuario'
+    }
 })
 productsSchema.plugin(mongoosePaginate)
 

@@ -26,12 +26,18 @@ const collectionSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['administrador', 'usuario'],
+        enum: ['administrador', 'usuario', 'premium'],
         default: 'usuario',
     },
     cartId: {
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Cart'
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpires: {
+        type: Date
     },
 })
 

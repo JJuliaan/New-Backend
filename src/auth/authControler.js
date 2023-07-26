@@ -1,7 +1,5 @@
 const { Router } = require('express')
 const Users = require('../models/usersDB.model')
-const publicAccess = require('../middlewares/publicAccess.middlewars')
-const { isValidPassword } = require('../ultis/cryptPassword')
 const passport = require('passport')
 const logger = require('../logger/factory')
 const router = Router()
@@ -19,7 +17,8 @@ router.post('/', passport.authenticate('login', { failureRedirect: 'auth/faillog
             role: req.user.role
         }
 
-        res.json({ status: 'success', message: 'Sesion iniciada' })
+        res.redirect('/users/profile')
+        // res.json({ status: 'success', message: 'Sesion iniciada' })
     } catch (error) {
         res.status(500).json({ status: 'error', error: 'Internal server error' })
     }
@@ -31,7 +30,7 @@ router.get('/github', passport.authenticate('github', { scope: ['user: email'] }
 
 router.get('/githubcallback', passport.authenticate('github', { failureRedirect: 'auth/faillogin' }), async (req, res) => {
     req.session.user = req.user
-    res.redirect('/products')
+    res.redirect('/users/profile')
 })
 
 router.get('/', async (req, res) => {
@@ -47,11 +46,11 @@ router.get('/logout', (req, res) => {
 
 router.get('/faillogin', (req, res) => {
     try {
-        logger.warning('falló estrategia de autenticacion')
         res.json({ error: 'Failed login' })
+        logger.error('falló estrategia de autenticacion')
 
     } catch (error) {
-        logger.warning(error.message)
+        logger.error(error.message)
     }
 })
 

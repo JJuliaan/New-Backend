@@ -20,7 +20,19 @@ loginForm.addEventListener('submit', (event) => {
         method,
         body
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        } else {
+            return response.json();
+        }
+    })
+    .then(data => {
+        if (data && data.status === 'success') {
+            window.location.href = '/users/profile'
+        } else {
+            console.log('Error')
+        }
+    })
     .catch(error => console.log(error.message))
 })

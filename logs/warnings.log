@@ -1,2 +1,21 @@
 warn: Vos (archvio.log)
 warn: Vos (archvio.log)
+error: generateUniqueCode is not defined
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: el usuario no existe
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: No puedes usar la misma contraseña
+error: falló estrategia de autenticacion
+error: el usuario no existe
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: undefined {"kind":"string","path":"role","reason":null,"stringValue":"\"{ role: 'premium' }\"","value":{"role":"premium"},"valueType":"Object"}

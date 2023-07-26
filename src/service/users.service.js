@@ -4,6 +4,7 @@ const message = require('../repositories')
 const CustomError = require('../handlers/errors/customError')
 const generateUsersErrorInfo = require('../handlers/errors/info')
 const EnumErrors = require('../handlers/errors/enumError')
+const logger = require('../logger/factory')
 
 
 
@@ -21,7 +22,7 @@ class UsuariosDB {
 
       const user = await userStorage.create(usuario)
 
-      await message.send(usuario)
+      if (usuario.phone) await message.send(usuario)
 
       const cart = Cart.create({
         userId: user._id
@@ -35,6 +36,29 @@ class UsuariosDB {
     } catch (error) {
       throw error
     }
+
+  }
+
+  async findOne(email) {
+    try {
+      const user = await userStorage.findOne(email)
+
+      return user
+
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async findAndUpdate(uid, newRole) {
+    if (newRole !== 'user' && newRole !== 'premium') {
+      return 'Rol inválido'
+    }
+
+    const actualizado = await userStorage.findByIdAndUpdate(uid, newRole)
+  
+
+    return actualizado
 
   }
 }

@@ -15,6 +15,10 @@ class CartsDao {
             const buscadorProduct = await Products.findOne({ _id: pid })
             if (!buscadorProduct) return 'Producto no encontado'
 
+            if (buscadorProduct.owner.toString() === userId.toString()) {
+                return res.status(403).json({ status: 'error', error: 'No puedes agregar tu propio producto al carrito' });
+            }
+
             const buscadorIndex = buscadorCart.cart.findIndex(p => p.products._id.toString() === pid)
 
             if (buscadorIndex !== -1) {
