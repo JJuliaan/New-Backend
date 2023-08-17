@@ -1,9 +1,6 @@
 const userStorage = require('../stores/users.store')
 const Cart = require('../models/carts.model')
 const message = require('../repositories')
-const CustomError = require('../handlers/errors/customError')
-const generateUsersErrorInfo = require('../handlers/errors/info')
-const EnumErrors = require('../handlers/errors/enumError')
 const logger = require('../logger/factory')
 
 
@@ -51,13 +48,29 @@ class UsuariosDB {
   }
 
   async findAndUpdate(uid, newRole) {
+
+    const user = await userStorage.findById(uid)
+
+    if (!user) {
+      return 'Usuario no encontrado'
+    }
+
     if (newRole !== 'user' && newRole !== 'premium') {
       return 'Rol inválido'
     }
 
-    const actualizado = await userStorage.findByIdAndUpdate(uid, newRole)
-  
+    const requiredDocuments = ['product', 'profile', 'document'];
+    const userDocuments = user.documents.map((doc) => path.basename(doc.name, path.extname(doc.name)));
 
+    const hasAllRequiredDocuments = requiredDocuments.every((doc) => userDocuments.includes(doc));
+
+    if (!hasAllRequiredDocuments) {
+      throw new Error('El usuario debe cargar los siguientes documentos: Identificación, Comprobante de domicilio, Comprobante de estado de cuenta');
+    }
+
+    const actualizado = await userStorage.findByIdAndUpdate(uid, newRole)
+
+    logger.info('Se cambio el role del usuario', actualizado)
     return actualizado
 
   }

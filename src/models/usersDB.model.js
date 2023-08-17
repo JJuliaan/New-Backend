@@ -39,6 +39,14 @@ const collectionSchema = new mongoose.Schema({
     resetPasswordExpires: {
         type: Date
     },
+    documents: [{
+        name: String,
+        reference: String
+    }],
+    last_connection: {
+        type: Date,
+        default: null
+    }
 })
 
 const Users = mongoose.model(collectionName, collectionSchema)

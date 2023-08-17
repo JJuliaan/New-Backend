@@ -1,0 +1,258 @@
+openapi: "3.0.1"
+info:
+  title: API Productos
+  version: "1.0"
+paths:
+  /products/deleteAll:
+    delete:
+      summary: Eliminar todos los productos
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Todo eliminado con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /products/mockingproducts:
+    get:
+      summary: Generar productos de ejemplo
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Productos generados exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+  /products/loadItems:
+    get:
+      summary: Cargar productos desde un archivo
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Productos cargados exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /products/all:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+  /products:
+    get:
+      summary: Obtener productos con opciones de filtrado y paginación
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          schema:
+            type: string
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Productos obtenidos exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+      responses:
+        '201':
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  product:
+                    $ref: '#/components/schemas/Product'
+
+  /products/{pid}:
+    get:
+      summary: Obtener detalles de un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    put:
+      summary: Actualizar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProduct'
+      responses:
+        '200':
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    delete:
+      summary: Eliminar un producto por ID (acceso premium)
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '403':
+          description: Acceso no autorizado
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        // Definir propiedades del Producto aquí
+
+    NewProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        code:
+          type: string
+        stock:
+          type: integer
+        status:
+          type: string
+        category:
+          type: string
+        thumbnail:
+          type: string
+        owner:
+          type: string
+      required:
+        - title
+        - price
+        - description
+        - stock
+        - status
+        - category
+        - thumbnail
+        - owner
+
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        code:
+          type: string
+        stock:
+          type: integer
+        status:
+          type: string
+        category:
+          type: string

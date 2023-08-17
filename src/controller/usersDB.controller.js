@@ -2,6 +2,7 @@ const { Router } = require('express')
 const UsuariosDB = require('../service/users.service')
 const passport = require('passport')
 const Users = new UsuariosDB()
+const usersModel = require('../models/usersDB.model')
 const router = Router()
 const publicAccess = require('../middlewares/publicAccess.middlewars')
 const privateAccess = require('../middlewares/privateAccess.middlewares')
@@ -10,6 +11,9 @@ const logger = require('../logger/factory')
 const generateUniqueCode = require('../ultis/generateUniqueCode.utils')
 const { createHash } = require('../ultis/cryptPassword')
 const adminAccess = require('../middlewares/adminAccess.midelware')
+const path = require('path')
+const upload = require('../config/multer.config')
+
 
 const mailAdapter = new MailAdapter()
 
@@ -43,7 +47,10 @@ router.get('/logout', (req, res) => {
         if (err) {
             console.error('Error al cerrar sesión:', err)
         }
-        res.redirect('/auth')
+        req.user.last_connection = new Date();
+        req.user.save().finally(() => {
+            res.redirect('/auth')
+        })
     })
 })
 
@@ -154,6 +161,23 @@ router.post('/reset/:token', async (req, res) => {
     } catch (error) {
         logger.error(error.message)
         res.status(500).json({ error: 'Error interno del servidor' })
+    }
+})
+
+router.post('/:uid/documents', upload.any(), async (req, res, next) => {
+    try {
+        const userId = req.params.uid
+        const user = await usersModel.findById(userId)
+        const uploadedDocuments = req.files.map((file) => ({
+            name: file.originalname,
+            reference: file.filename,
+        }))
+        user.documents.push(...uploadedDocuments)
+        await user.save()
+        res.json({ message: 'Document(s) uploaded successfully.' })
+    } catch (error) {
+        console.error('Error uploading document(s):', error)
+        next(error)
     }
 })
 

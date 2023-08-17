@@ -1,0 +1,236 @@
+openapi: "3.0.1"
+info:
+  title: API Carritos
+  version: "1.0"
+paths:
+  /carts/{cid}/purchase:
+    post:
+      summary: Finalizar la compra de un carrito
+      tags: 
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Compra finalizada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Error al finalizar la compra
+
+  /carts/peligroDelete:
+    delete:
+      summary: Eliminar todos los carritos (¡Cuidado!)
+      tags: 
+        - Carts
+      responses:
+        '200':
+          description: Todo eliminado con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /carts/all:
+    get:
+      summary: Obtener todos los carritos
+      tags: 
+        - Carts
+      responses:
+        '200':
+          description: Lista de carritos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  carts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Cart'
+
+  /carts/{cid}:
+    get:
+      summary: Obtener detalles de un carrito
+      tags: 
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Cart'
+
+    delete:
+      summary: Eliminar un carrito
+      tags: 
+        - Carts
+      responses:
+        '200':
+          description: Carrito borrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /carts:
+    post:
+      summary: Crear un nuevo carrito
+      tags: 
+        - Carts
+      responses:
+        '200':
+          description: Carrito creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /carts/{cid}/{pid}:
+    post:
+      summary: Agregar un producto a un carrito
+      tags: 
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto agregado al carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  newProduct:
+                    type: object
+
+  /carts/{cid}/products/{pid}:
+    put:
+      summary: Actualizar cantidad de unidades de un producto en un carrito
+      tags: 
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: Cantidad de unidades actualizada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  newCantidad:
+                    type: integer
+    delete:
+      summary: Eliminar un producto de un carrito
+      tags: 
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto eliminado del carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  borrar:
+                    type: object
+
+components:
+  schemas:
+    CartItem:
+      type: object
+      properties:
+        products:
+          type: object
+          description: Producto
+        quantity:
+          type: integer
+          description: Número de unidades del producto
+        _id:
+          type: string
+          description: ID del producto
+
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del carrito
+        userId:
+          type: string
+          description: ID del usuario
+        cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+        __v:
+          type: integer
+          description: Versión de la entidad en la base de datos
+

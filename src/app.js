@@ -9,6 +9,11 @@ const hbs = handlebars.create({
     handlebars: allowInsecurePrototypeAccess(require('handlebars')),
     defaultLayout: 'main'
 });
+
+// Swagger
+const swaggerJsondoc = require('swagger-jsdoc')
+const swaggerUiExpress = require('swagger-ui-express')
+
 const cookieParser = require('cookie-parser')
 const router = require('./router')
 const MongoConnect = require('../db')
@@ -47,6 +52,25 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
+//swagger documentate
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: "Documentacion to my project",
+            description: "Endpoints to Manager Products and carts in my ecommerce aplication."
+        }
+    },
+    apis: [`${__dirname.replace(/\\/g, '/')}/docs/**/*.yaml`]
+}
+
+const swaggerSpecs = swaggerJsondoc(swaggerOptions)
+
+
+
+app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerSpecs))
 
 app.use(addLogger)
 

@@ -32,7 +32,7 @@ router.get('/all', async (req, res) => {
     try {
         res.json({ carts: await Carts.findAll() })
     } catch (error) {
-        loggerr.error(error)
+        logger.error(error)
     }
 })
 

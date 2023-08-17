@@ -10,7 +10,6 @@ const productsController = require('../controller/products.controller')
 const cartsController = require('../controller/carts.controller')
 const messagesController = require('../controller/message.controller')
 const authController = require('../auth/authControler')
-
 const loggerTest = require('../controller/loggerTest.controller')
 
 const router = app => {

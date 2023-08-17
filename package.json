@@ -43,11 +43,17 @@
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
     "socket.io": "^4.6.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "sweetalert2": "^11.4.8",
     "twilio": "^4.12.0",
     "winston": "^3.9.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "sinon": "^15.2.0",
+    "supertest": "^6.3.3"
   }
 }

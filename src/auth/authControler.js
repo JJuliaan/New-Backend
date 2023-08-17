@@ -9,6 +9,8 @@ router.post('/', passport.authenticate('login', { failureRedirect: 'auth/faillog
 
         if (!req.user) return res.status(401).json({ status: 'error', error: 'El usuario y la contraseña no coinciden' })
 
+        req.user.last_connection = new Date();
+        await req.user.save();
 
         req.session.user = {
             _id: req.user._id,
