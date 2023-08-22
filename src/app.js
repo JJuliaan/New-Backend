@@ -64,7 +64,8 @@ app.engine('handlebars', hbs.engine)
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
-const connection = mongoose.connect(process.env.MONGO_URL)
+
+
 app.use(session({
     store: MongoStore.create({
         mongoUrl: `mongodb+srv://${dbAdmin}:${dbPassword}@${dbHost}/${dbName}?retryWrites=true&w=majority`,
