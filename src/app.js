@@ -66,7 +66,7 @@ app.use(methodOverride('_method'))
 
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: `mongodb+srv://${dbAdmin}:${dbPassword}@${dbHost}/${dbName}?retryWrites=true&w=majority`,
+        mongoUrl: (process.env.MONGO_URL),
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true }
     }),
     secret: 'backSecret',
