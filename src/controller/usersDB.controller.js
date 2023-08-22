@@ -3,6 +3,8 @@ const UsuariosDB = require('../service/users.service')
 const passport = require('passport')
 const Users = new UsuariosDB()
 const usersModel = require('../models/usersDB.model')
+const Cart = require('../service/cart.service')
+const cartService = new Cart()
 const router = Router()
 const publicAccess = require('../middlewares/publicAccess.middlewars')
 const privateAccess = require('../middlewares/privateAccess.middlewares')
@@ -17,20 +19,100 @@ const upload = require('../config/multer.config')
 
 const mailAdapter = new MailAdapter()
 
-router.get('/', publicAccess, async (req, res) => {
-    res.json({ message: 'Hi server' })
-    // res.render('signup.handlebars')
+router.get('/api/users', adminAccess, async (req, res) => {
+    try {
+        const users = await usersModel.find()
+        // const simplifiedUsers = users.map(user => ({
+        //     name: user.first_name,
+        //     surname: user.last_name,
+        //     email: user.email,
+        //     role: user.role
+        // }))
+        res.render('users', { users })
+    } catch (error) {
+        logger.error(error.message)
+        res.status(500).json({ error: 'Error interno del servidor' })
+    }
 })
 
+router.delete('/api/users', adminAccess, async (req, res) => {
+    try {
+        const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+        const inactiveUsers = await usersModel.find({ last_connection: { $lt: twoDaysAgo } })
+        await Promise.all(inactiveUsers.map(user => {
+            mailAdapter.sendNotificationRemove(user)
+            return user.remove()
+        }));
+        res.json({ message: 'Usuarios inactivos eliminados correctamente.' });
+    } catch (error) {
+        logger.error(error.message);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
+router.post('/:uid/role', adminAccess, async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const newRole = req.body.newRole;
+
+        if (newRole !== 'user' && newRole !== 'premium' && newRole !== 'admin') {
+            return res.status(400).json({ error: 'Rol inválido' });
+        }
+
+        const user = await usersModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        user.role = newRole;
+        await user.save();
+
+        res.json({ message: 'Rol de usuario actualizado correctamente.' });
+    } catch (error) {
+        logger.error(error.message);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+
+
+router.delete('/:uid/delete', adminAccess, async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await usersModel.findById(userId)
+        if (!user) {
+            logger.info('No existe el usuario')
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        await mailAdapter.sendNotificationRemove(user)
+
+        await usersModel.findByIdAndRemove(userId)
+
+        res.json({ message: 'Usuario eliminado correctamente.' });
+    } catch (error) {
+        logger.error(error.message);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+router.get('/', (req, res) => {
+    res.render('signup')
+})
 
 router.post('/', passport.authenticate('register', { failureRedirect: '/users/failregister' }), async (req, res) => {
     try {
+        const newUser= req.user
+        
+        const newCart = await cartService.createForUser(newUser._id)
 
-        res.status(201).json({ Status: 'succes', message: 'usuario registrado' })
+        newUser.cartId = newCart._id
+        await newUser.save()
+
+        res.redirect('/auth')
 
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).json({ Status: 'error', error: 'Internal server error' })
         console.log(error.message)
     }
@@ -47,7 +129,7 @@ router.get('/logout', (req, res) => {
         if (err) {
             console.error('Error al cerrar sesión:', err)
         }
-        req.user.last_connection = new Date();
+        req.user.last_connection = new Date()
         req.user.save().finally(() => {
             res.redirect('/auth')
         })

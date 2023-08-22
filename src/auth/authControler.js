@@ -22,6 +22,7 @@ router.post('/', passport.authenticate('login', { failureRedirect: 'auth/faillog
         res.redirect('/users/profile')
         // res.json({ status: 'success', message: 'Sesion iniciada' })
     } catch (error) {
+        logger.error(error.message)
         res.status(500).json({ status: 'error', error: 'Internal server error' })
     }
 })

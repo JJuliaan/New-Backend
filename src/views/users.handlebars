@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Usuarios</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                    <td>{{this.first_name}}</td>
+                    <td>{{this.last_name}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.role}}</td>
+                    <td>
+                        <form method="POST" action="/users/{{this._id}}/role" class="form-inline">
+                            <div class="form-group">
+                                <select name="newRole" class="form-control">
+                                    <option value="user">Usuario</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Cambiar Rol</button>
+                            </div>
+                        </form>
+
+                        <form method="POST" action="/users/{{this._id}}/delete?_method=DELETE" class="form-inline">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-danger">Eliminar Usuario</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const cartStorage = require('../stores/cart.store')
 const Products = require('../models/products.model')
+const Cart = require('../models/carts.model')
 
 class CartsDao {
     constructor() { }
@@ -9,32 +10,56 @@ class CartsDao {
         return await cartStorage.find()
     }
 
-    async agregateProduct(cid, pid) {
+    async createForUser(userId) {
         try {
-            const buscadorCart = await cartStorage.findOne(cid)
-            const buscadorProduct = await Products.findOne({ _id: pid })
-            if (!buscadorProduct) return 'Producto no encontado'
+            const userCart = await Cart.findOne({ userId: userId });
 
-            if (buscadorProduct.owner.toString() === userId.toString()) {
-                return res.status(403).json({ status: 'error', error: 'No puedes agregar tu propio producto al carrito' });
+            const newCart = new Cart({
+                userId: userId,
+                cart: userCart ? userCart.cart : []
+            });
+
+            return await newCart.save();
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async agregateProduct(cid, pid, userId) {
+        try {
+            console.log(cid)
+            const buscadorCart = await Cart.findById(cid);
+            const buscadorProduct = await Products.findById(pid);
+            console.log(buscadorCart)
+
+            if (!buscadorProduct) {
+                return 'Producto no encontrado';
             }
 
-            const buscadorIndex = buscadorCart.cart.findIndex(p => p.products._id.toString() === pid)
+            if (!buscadorCart) {
+                console.log('no hay carrito')
+            }
+
+            if (userId && buscadorProduct.owner && buscadorProduct.owner.toString() === userId.toString()) {
+                return { error: 'No puedes agregar tu propio producto al carrito' };
+            }
+
+            const buscadorIndex = buscadorCart.cart.findIndex(p => p.products._id.toString() === pid);
 
             if (buscadorIndex !== -1) {
-                console.log(buscadorIndex)
-                buscadorCart.cart[buscadorIndex].quantity += 1
+                console.log(buscadorIndex);
+                buscadorCart.cart[buscadorIndex].quantity += 1;
             } else {
                 buscadorCart.cart.push({
                     products: pid,
-                })
+                });
             }
 
-            await buscadorCart.save()
+            await buscadorCart.save();
 
-            return buscadorCart
+            return buscadorCart;
         } catch (error) {
-            throw error
+            throw error;
         }
     }
 
@@ -87,6 +112,15 @@ class CartsDao {
 
         } catch (error) {
             throw error
+        }
+    }
+
+    async findUserCart(userId) {
+        try {
+            const userCart = await cartStorage.findOne({ userId: userId }).populate('cart.products');
+            return userCart;
+        } catch (error) {
+            throw error;
         }
     }
 

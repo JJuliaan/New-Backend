@@ -1,25 +1,88 @@
-<h1>Products</h1>
-<ul>
-{{#each products}}
-  <li>
-    <h2>{{title}}</h2>
-    <p>{{description}}</p>
-    <p>Price: {{price}}</p>
-    <p>Category: {{category}}</p>
-    {{#if ../cartId}}
-    <form method="POST" action="/carts/{{../cartId}}/{{this._id}}">
-      <input type="hidden" name="product_id" value="{{_id}}">
-      <button type="submit">Add to cart</button>
-    </form>
-    {{/if}}
-  </li>
-{{/each}}
-</ul>
-<div>
-  {{#if prevLink}}
-  <a href="{{prevLink}}">Prev</a>
-  {{/if}}
-  {{#if nextLink}}
-  <a href="{{nextLink}}">Next</a>
-  {{/if}}
-</div>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Productos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+
+    form {
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    a {
+      margin-right: 10px;
+      text-decoration: none;
+      color: #007bff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Productos</h1>
+    <ul>
+      {{#each products}}
+      <li>
+        <h2>{{title}}</h2>
+        <p>{{description}}</p>
+        <p>Precio: {{price}}</p>
+        <p>Categoría: {{category}}</p>
+        <form method="POST" action="/carts/{{../cartId}}/{{this._id}}">
+          <input type="hidden" name="product_id" value="{{_id}}">
+          <button type="submit">Agregar al carrito</button>
+        </form>
+      </li>
+      {{/each}}
+    </ul>
+    <a href="/carts/{{cartId}}">Ver Carrito</a>
+    <div>
+      {{#if prevLink}}
+      <a href="{{prevLink}}">Anterior</a>
+      {{/if}}
+      {{#if nextLink}}
+      <a href="{{nextLink}}">Siguiente</a>
+      {{/if}}
+    </div>
+  </div>
+</body>
+
+</html>

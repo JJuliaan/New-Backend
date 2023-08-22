@@ -19,7 +19,7 @@ const findPopulateId = async (id) => {
 }
 
 const findOne = async (cartId) => {
-    return await CartModel.findOne({_id: cartId})
+    return await CartModel.findById({_id: cartId})
 }
 
 const findById = async (cartId) => {

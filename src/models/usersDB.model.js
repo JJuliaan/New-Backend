@@ -9,7 +9,6 @@ const collectionSchema = new mongoose.Schema({
         type: String
     },
     last_name: {
-        require: true,
         type: String
     },
     email: {
@@ -26,8 +25,8 @@ const collectionSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['administrador', 'usuario', 'premium'],
-        default: 'usuario',
+        enum: ['admin', 'user', 'premium'],
+        default: 'user',
     },
     cartId: {
         type: mongoose.Schema.Types.ObjectId,

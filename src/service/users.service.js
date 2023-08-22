@@ -11,7 +11,7 @@ class UsuariosDB {
   async crearUsuario(usuario) {
     try {
 
-      let role = 'usuario'
+      let role = 'user'
 
       if (usuario.email === 'admin@gmail.com' && usuario.password === 'admin') {
         role = 'administrador'
@@ -20,12 +20,6 @@ class UsuariosDB {
       const user = await userStorage.create(usuario)
 
       if (usuario.phone) await message.send(usuario)
-
-      const cart = Cart.create({
-        userId: user._id
-      })
-
-      user.cartId = cart._id
 
 
       return user

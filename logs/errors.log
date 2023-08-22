@@ -23,3 +23,182 @@ error: falló estrategia de autenticacion
 error: falló estrategia de autenticacion
 error: falló estrategia de autenticacion
 error: undefined {"kind":"string","path":"role","reason":null,"stringValue":"\"{ role: 'premium' }\"","value":{"role":"premium"},"valueType":"Object"}
+error: userDB validation failed: role: `admin` is not a valid enum value for path `role`.
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: undefined
+error: undefined
+error: Parameter "filter" to findOne() must be an object, got "64c02948ca632da163814f27" (type string)
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: user.remove is not a function
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: user.remove is not a function
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: Cannot find module 'user'
+Require stack:
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\view.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\application.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\lib\express.js
+- C:\Users\julya\Desktop\nuevoBack\node_modules\express\index.js
+- C:\Users\julya\Desktop\nuevoBack\src\app.js
+error: userDB validation failed: role: `user` is not a valid enum value for path `role`.
+error: Cannot read properties of undefined (reading 'toString')
+error: Cannot read properties of undefined (reading 'toString')
+error: Cannot read properties of undefined (reading 'toString')
+error: Cannot read properties of undefined (reading 'toString')
+error: existe
+error: existe
+error: existe
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: usuario diferente a contraseña
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: usuario diferente a contraseña
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: usuario diferente a contraseña
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: undefined
+error: undefined
+error: el usuario no existe
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: existe
+error: usuario diferente a contraseña
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: cartStorage.findOne(...).populate is not a function
+error: Cart.findUserCart is not a function
+error: Cannot read properties of undefined (reading '_id')
+error: Cannot read properties of undefined (reading 'id')
+error: Cast to ObjectId failed for value "{ _id: { userId: new ObjectId("64e4f013b9ce8489d72baf23") } }" (type Object) at path "_id" for model "cart"
+error: Cast to ObjectId failed for value "{ _id: { userId: new ObjectId("64e4f013b9ce8489d72baf23") } }" (type Object) at path "_id" for model "cart"
+error: existe
+error: existe
+error: usuario diferente a contraseña
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: Assignment to constant variable.
+error: Assignment to constant variable.
+error: el usuario no existe
+error: falló estrategia de autenticacion
+error: falló estrategia de autenticacion
+error: Assignment to constant variable.
+error: El carrito del usuario no existe
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: Cannot read properties of null (reading 'cart')
+error: existe
+error: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "cart"

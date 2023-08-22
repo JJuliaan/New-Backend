@@ -5,31 +5,38 @@ const handlebars = require('express-handlebars')
 const MongoStore = require('connect-mongo')
 const compression = require('express-compression')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-const hbs = handlebars.create({
-    handlebars: allowInsecurePrototypeAccess(require('handlebars')),
-    defaultLayout: 'main'
-});
+const router = require('./router')
+const app = express()
+const session = require('express-session');
 
 // Swagger
 const swaggerJsondoc = require('swagger-jsdoc')
 const swaggerUiExpress = require('swagger-ui-express')
 
+// Method
+const methodOverride = require('method-override')
+
+//cookieParser
 const cookieParser = require('cookie-parser')
-const router = require('./router')
+
+
+//Mongo
 const MongoConnect = require('../db')
-const passport = require('passport');
 const { dbAdmin, dbPassword, dbHost, dbName } = require('./config/db.config')
-const logger = require('./logger/factory')
 
-const app = express()
-
-
-
-const morgan = require('morgan');
-const session = require('express-session');
+//Passport
+const passport = require('passport');
 const initializePassport = require('./config/passport.config');
+
+//Logger
+const logger = require('./logger/factory')
 const errorHandler = require('./middlewares/errors');
 const addLogger = require('./middlewares/logger.midelwares');
+
+
+
+//Morgan
+const morgan = require('morgan');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -39,9 +46,23 @@ app.use(cookieParser());
 
 app.use(morgan('dev'))
 
+const hbs = handlebars.create({
+    handlebars: allowInsecurePrototypeAccess(require('handlebars')),
+    defaultLayout: 'main',
+    helpers: {
+        calculateTotal: function (cartItems) {
+            let total = 0;
+            for (const item of cartItems) {
+                total += item.products.price * item.quantity;
+            }
+            return total.toFixed(2);
+        }
+    }
+});
 app.engine('handlebars', hbs.engine)
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
+app.use(methodOverride('_method'))
 
 app.use(session({
     store: MongoStore.create({
@@ -52,6 +73,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
 
 //swagger documentate
 

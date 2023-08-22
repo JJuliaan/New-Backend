@@ -6,9 +6,6 @@ const UsuariosDB = require('../service/users.service')
 const userDao = new UsuariosDB()
 const { isValidPassword } = require('../ultis/cryptPassword')
 const UserDTO = require('../DTOs/users.dto')
-const CustomError = require('../handlers/errors/customError')
-const generateUsersErrorInfo = require('../handlers/errors/info')
-const EnumErrors = require('../handlers/errors/enumError')
 const logger = require('../logger/factory')
 
 const LocalStrategy = local.Strategy
@@ -20,26 +17,25 @@ const initializePassport = () => {
 
             const newUserInfo = new UserDTO(req.body)
 
+            logger.info(newUserInfo)
+
             const user = await Users.findOne({ email: username })
             if (user) {
-                logger.warning('existe');
+                console.log(user)
+                logger.error('existe');
                 return done(null, false)
             }
 
-            if (!newUserInfo.first_name || !newUserInfo.last_name || !newUserInfo.email) {
-                CustomError.createError({
-                    name: 'User creation error',
-                    cause: generateUsersErrorInfo({ newUserInfo }),
-                    message: 'Error tryng to create user',
-                    code: EnumErrors.INVALID_TYPES_ERROR,
-                })
+            if (!newUserInfo.first_name || !newUserInfo.email) {
+                return done(null, false, { message: 'Error en la información de usuario proporcionada.' });
             }
+            
 
             const newUser = await userDao.crearUsuario(newUserInfo)
 
             done(null, newUser)
         } catch (error) {
-            done(error)
+            done(error.message)
         }
     }))
 
@@ -51,7 +47,7 @@ const initializePassport = () => {
                 return done(null, false)
             }
 
-            if (!isValidPassword(password, user)) return done(null, false)
+            if (!isValidPassword(password, user)) return done(null, false), logger.error('usuario diferente a contraseña')
 
             done(null, user)
 

@@ -1,79 +1,74 @@
-const Ticket = require('../models/ticket.models')
-const User = require('../models/usersDB.model')
-const generateUniqueCode = require('../ultis/generateUniqueCode.utils')
-const calculateTotalAmount = require('../ultis/calculateTotalAmount.utils')
+const Ticket = require('../models/ticket.models');
+const User = require('../models/usersDB.model');
+const generateUniqueCode = require('../ultis/generateUniqueCode.utils');
+const calculateTotalAmount = require('../ultis/calculateTotalAmount.utils');
 const CartsDao = require('./cart.service');
 const Products = require('../models/products.model');
-const Carts = new CartsDao()
+const Carts = new CartsDao();
 
-
-class ticketDao {
+class TicketDao {
     constructor() { }
-
 
     async create(cartId) {
         try {
-
-            const cart = await Carts.findById(cartId)
-
+            const cart = await Carts.findById(cartId);
             if (!cart) {
-                throw 'Carrito no encontrado'
+                throw new Error('Carrito no encontrado');
             }
 
-            const user = await User.findById(cart.userId)
-
+            const user = await User.findById(cart.userId);
+            console.log(user)
             if (!user) {
-                throw new Error ('Usuario asociado al carrito no encontrado')
+                throw new Error('Usuario asociado al carrito no encontrado');
             }
 
-            const purchaserEmail = user.email
+            const purchaserEmail = user.email;
 
-            const productsToUpdate = []
-            const productsNotPurchased = []
+            const { productsToUpdate, productsNotPurchased } = await this.updateProducts(cart.cart);
 
-
-            for (const item of cart.cart) {
-                const products = item.products
-                const quantityInCart = item.quantity
-
-                if (products.stock >= quantityInCart) {
-                    const updatedStock = products.stock - quantityInCart
-                    productsToUpdate.push({ products: products._id, stock: updatedStock })
-                } else {
-                    productsNotPurchased.push(products._id)
-                }
-            }
-
-            for (const update of productsToUpdate) {
-                await Products.findByIdAndUpdate(update.products, { stock: update.stock })
-            }
+            await Promise.all(productsToUpdate.map(update => Products.findByIdAndUpdate(update.products, { stock: update.stock })));
 
             const newTicketInfo = {
                 code: generateUniqueCode(),
-                pucharse_datetime: new Date(),
+                purchase_datetime: new Date(),
                 amount: calculateTotalAmount(cart.cart),
-                purcharser: purchaserEmail
-            }
+                purchaser: purchaserEmail
+            };
 
-            const ticket = await Ticket.create(newTicketInfo)
+            const ticket = await Ticket.create(newTicketInfo);
 
-            cart.cart = cart.cart.filter(item => !productsNotPurchased.includes(item.products))
-
-            console.log(cart.cart)
-
-            await cart.save()
+            cart.cart = cart.cart.filter(item => !productsNotPurchased.includes(item.products));
+            await cart.save();
 
             if (productsNotPurchased.length > 0) {
-                throw new Error(`Compra finalizada con productos no procesados: ${productsNotPurchased}`)
+                throw new Error(`Compra finalizada con productos no procesados: ${productsNotPurchased}`);
             } else {
-                return { message: 'Compra finalizada exitosamente', ticket }
+                return { message: 'Compra finalizada exitosamente', ticket };
             }
         } catch (error) {
-            console.error('Error al finalizar la compra:', error)
-            throw new Error ('Ha ocurrido un error al finalizar la compra')
+            console.error('Error al finalizar la compra:', error);
+            throw new Error('Ha ocurrido un error al finalizar la compra');
+        }
+    }
+
+    async updateProducts(cartItems) {
+        const productsToUpdate = [];
+        const productsNotPurchased = [];
+
+        for (const item of cartItems) {
+            const product = item.products;
+            const quantityInCart = item.quantity;
+
+            if (product.stock >= quantityInCart) {
+                const updatedStock = product.stock - quantityInCart;
+                productsToUpdate.push({ products: product._id, stock: updatedStock });
+            } else {
+                productsNotPurchased.push(product._id);
+            }
         }
 
+        return { productsToUpdate, productsNotPurchased };
     }
 }
 
-module.exports = ticketDao
+module.exports = TicketDao;

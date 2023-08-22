@@ -1,8 +1,36 @@
+<!DOCTYPE html>
+<html>
+
 <head>
     <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
-    <p>Correo electrónico: {{user.email}}</p>
-    <a href="/users/logout">Cerrar sesión</a>
+    <div class="container">
+        <h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
+        <p>Correo electrónico: {{user.email}}</p>
+        <a href="/users/logout" class="btn btn-secondary">Cerrar sesión</a>
+    </div>
 </body>
+
+</html>
