@@ -29,9 +29,14 @@ const initializePassport = () => {
             if (!newUserInfo.first_name || !newUserInfo.email) {
                 return done(null, false, { message: 'Error en la información de usuario proporcionada.' });
             }
-            
+
 
             const newUser = await userDao.crearUsuario(newUserInfo)
+
+            const newCart = await cartService.createForUser(newUser._id)
+
+            newUser.cartId = newCart._id
+            await newUser.save()
 
             done(null, newUser)
         } catch (error) {
